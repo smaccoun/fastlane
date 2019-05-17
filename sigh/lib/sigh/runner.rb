@@ -142,7 +142,12 @@ module Sigh
     end
 
     def filter_profiles_by_name(profiles)
-      filtered = profiles.select { |p| p.name.strip == Sigh.config[:provisioning_name].strip }
+      profiles.each { |p| 
+        UI.message("Comparing the downloaded profile name: '#{p.name}' to the config profile_name '#{Sigh.config[:provisioning_name]}'")
+      } 
+      filtered = profiles.select { |p| 
+        p.name.strip == Sigh.config[:provisioning_name].strip 
+      }
       if Sigh.config[:ignore_profiles_with_different_name]
         profiles = filtered
       elsif (filtered || []).count > 0
